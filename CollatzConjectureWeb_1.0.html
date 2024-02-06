@@ -1,0 +1,55 @@
+<!DOCTYPE html> <!註解此為HTML形式網頁>
+<html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8">
+    <title>考拉茲猜想</title>
+</head>
+
+<body>
+    <h1 style="color:darkblue; font-size: 30px; font-weight: bold;"><center>考拉茲猜想</center></h1>
+    <center><input type="number" name="input_num " id="input_num" step="1" placeholder="請輸入正整數" required autofocus>
+    <input type="button" value="開始運算" class="button"></center>
+    
+    <center><p style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</p>
+    <div id="output"><p style="font-style: italic;">請輸入正整數並開始運算以取得結果</p></div></center>
+
+    <script>
+        var el = document.querySelector(".button");
+        el.onclick = function proc(){
+
+            var inputElement = document.getElementById('input_num');
+            var input = inputElement.value;
+            //讀取ID為"input_num"的數字輸入格所傳回之訊息
+            
+            if (input > 0 && input % 1 == 0){
+                var process = [input];//新增process陣列，並將輸入的數字先加入
+            }else{
+                window.alert("輸入數值錯誤！\n請輸入正整數");
+                input = "";
+                document.getElementById('input_num').innerHTML = "";
+            }
+           
+
+            while(input != 1){
+                if(input % 2 != 0){
+                    input = input * 3 + 1;
+                }else{
+                    input /= 2;
+                } 
+                process.push(input);  
+            }
+
+            console.log(process);
+
+            var el = document.getElementById("output");
+            el.innerHTML = process;
+
+            window.alert("運算完成！\n總運算次數" + (process.length - 1));
+            
+        }
+    </script>
+</body>
+</html>
+
