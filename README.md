@@ -1,4 +1,4 @@
-# 考拉茲猜想網頁版CollatzConjectureWeb
+# 考拉茲猜想網頁版Collatz Conjecture Web
 網頁直接用<https://tailbear1107.github.io/CollatzConjectureWeb/index.html>
 
 ## V1.0
