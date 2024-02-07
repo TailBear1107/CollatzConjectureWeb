@@ -4,18 +4,84 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!增加一個行動裝置的版面宣告>
     <title>考拉茲猜想</title>
+    <style>
+        input.button {
+            width:120px;
+            height:40px;
+            border:2px blue none;
+            background-color:rgb(3, 123, 252);
+            border-radius: 5px; 
+            color: white; 
+            font-size: 17px; 
+            font-weight: bold;
+        }
+        input.button:hover {
+            background-color:rgb(3, 94, 252);
+        }
+
+        input.input_num {
+            display: inline-block;
+            width:300px;
+            height:36px;
+            line-height:20px;
+            font-size:20px;
+        }
+
+        h1.title {
+            color:white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        nav.a {
+            color: inherit; /* 移除超連結顏色 */
+            text-decoration: none; /* 移除超連結底線 */
+        }
+
+        nav > ul {
+            list-style: none; /* 移除項目符號 */
+            background-color: black;
+            display: block; 
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li:hover {
+        background-color: rgb(115, 115, 115);
+        color: white;
+        }
+
+        .top{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>    
 </head>
 
 <body>
-    <h1 style="color:darkblue; font-size: 30px; font-weight: bold;"><center>考拉茲猜想</center></h1>
-    <center><input type="number" name="input_num " id="input_num" step="1" placeholder="請輸入正整數" required autofocus>
-    <input type="button" value="開始運算" class="button"></center>
-    
+    <nav>
+        <ul class="top">
+            <li><h1 class="title">考拉茲猜想</h1></li>
+        </ul>    
+    </nav>
+
+    <br>
+    <center><input type="number" name="input_num " class="input_num"id="input_num" step="1" min="1" placeholder="請輸入正整數" required autofocus>
+    <input type="button" value="開始運算" class="button" id="button" ></center>
     <center><p style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</p>
     <div id="output"><p style="font-style: italic;">請輸入正整數並開始運算以取得結果</p></div></center>
 
     <script>
+        document.getElementById("input_num").addEventListener("keyup",function(event){
+            event.preventDefault();
+            if (event.keyCode === 13) {
+            document.getElementById("button").click();
+            }
+        })
+        //增加一個EventListener，偵測Enter鍵是否被按下，若被按下則代為執行點擊按鈕
+
         var el = document.querySelector(".button");
         el.onclick = function proc(){
 
@@ -24,14 +90,14 @@
             //讀取ID為"input_num"的數字輸入格所傳回之訊息
             
             if (input > 0 && input % 1 == 0){
-                var process = [input];//新增process陣列，並將輸入的數字先加入
+                var process = [input];
+                //如果input符合正整數，新增process陣列，並將輸入的數字先加入
             }else{
                 window.alert("輸入數值錯誤！\n請輸入正整數");
                 input = "";
-                document.getElementById('input_num').innerHTML = "";
+                //如果input不符合正整數，跳出警告視窗並清空input之值
             }
            
-
             while(input != 1){
                 if(input % 2 != 0){
                     input = input * 3 + 1;
@@ -42,14 +108,15 @@
             }
 
             console.log(process);
+            //Debug用，可移除
 
             var el = document.getElementById("output");
             el.innerHTML = process;
-
+            //顯示陣列內容
             window.alert("運算完成！\n總運算次數" + (process.length - 1));
-            
+            //跳出通知視窗
         }
+        //當收到按鈕被按下之訊息後，執行主運算
     </script>
 </body>
 </html>
-
