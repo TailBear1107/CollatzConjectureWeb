@@ -1,10 +1,10 @@
-<!DOCTYPE html> <!註解此為HTML形式網頁>
+<!DOCTYPE html> <!--註解此為HTML形式網頁-->
 <html>
 <html lang="zh-tw">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"><!增加一個行動裝置的版面宣告>
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!--增加一個行動裝置的版面宣告-->
     <title>考拉茲猜想</title>
     <style>
         input.button {
@@ -53,16 +53,17 @@
         color: white;
         }
 
-        .top{
+        .topbar{
             display: flex;
             justify-content: space-between;
         }
+
     </style>    
 </head>
 
 <body>
     <nav>
-        <ul class="top">
+        <ul class="topbar">
             <li><h1 class="title">考拉茲猜想</h1></li>
         </ul>    
     </nav>
@@ -70,8 +71,15 @@
     <br>
     <center><input type="number" name="input_num " class="input_num"id="input_num" step="1" min="1" placeholder="請輸入正整數" required autofocus>
     <input type="button" value="開始運算" class="button" id="button" ></center>
-    <center><p style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</p>
-    <div id="output"><p style="font-style: italic;">請輸入正整數並開始運算以取得結果</p></div></center>
+
+    <div id="out">
+    <section>
+        <center><h1 style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</h1></center>
+        <div id="output"><p style="font-style: italic;">請輸入正整數並開始運算以取得結果</p></div>
+
+
+    </section>
+    </div>
 
     <script>
         document.getElementById("input_num").addEventListener("keyup",function(event){
@@ -110,8 +118,14 @@
             console.log(process);
             //Debug用，可移除
 
-            var el = document.getElementById("output");
-            el.innerHTML = process;
+            var stringprocess = process.toString();
+            //process陣列轉字串
+
+            var outputprocess = stringprocess.replace(/,/g , "<br>")
+            //將陣列內逗號取代為換行
+
+            var el1 = document.getElementById("output");
+            el1.innerHTML = '<p style = "border:1px solid #000000;width: 200px;height: 400px;padding:5px;overflow: auto;">' + outputprocess + '</p>';
             //顯示陣列內容
             window.alert("運算完成！\n總運算次數" + (process.length - 1));
             //跳出通知視窗
