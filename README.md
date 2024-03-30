@@ -8,4 +8,4 @@
 請見[Releases](https://github.com/TailBear1107/CollatzConjectureWeb/releases)
 
 ## 目前網頁版版本
-V1.1
+V1.2
