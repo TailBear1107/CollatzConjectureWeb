@@ -7,6 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"><!--增加一個行動裝置的版面宣告-->
     <title>考拉茲猜想</title>
     <style>
+        body{
+            background: white;
+            color: black;
+        }
+        @media(prefers-color-scheme: light){
+            body{
+            background: white;
+            color: black;
+            }
+        }
+        @media(prefers-color-scheme: dark){
+            body{
+            background: rgb(35,35,35);
+            color: white;
+            }
+        }
+        /*深色模式自動切換*/
         input.button {
             width:120px;
             height:40px;
@@ -75,7 +92,9 @@
     <div id="out">
     <section>
         <center><h1 style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</h1></center>
+        <div id="status"></div>
         <div id="output"><p style="font-style: italic;">請輸入正整數並開始運算以取得結果</p></div>
+        
 
 
     </section>
@@ -96,6 +115,8 @@
             var inputElement = document.getElementById('input_num');
             var input = inputElement.value;
             //讀取ID為"input_num"的數字輸入格所傳回之訊息
+
+            var status = 0;
             
             if (input > 0 && input % 1 == 0){
                 var process = [input];
@@ -109,6 +130,13 @@
             while(input != 1){
                 if(input % 2 != 0){
                     input = input * 3 + 1;
+
+                    if(input >= Number.MAX_SAFE_INTEGER){
+                        process.push("(發生溢位)")
+                        status = 1;
+                        break;
+                    }
+                    //溢位檢測
                 }else{
                     input /= 2;
                 } 
@@ -127,7 +155,16 @@
             var el1 = document.getElementById("output");
             el1.innerHTML = '<p style = "border:1px solid #000000;width: 200px;height: 400px;padding:5px;overflow: auto;">' + outputprocess + '</p>';
             //顯示陣列內容
+
+            if(status == 1){
+                window.alert("運算已終止！\n在第" + (process.length - 1) + "步運算時變數發生溢位");
+                var el2 = document.getElementById("status");
+                el2.innerHTML = '<p style = "font-weight: bold; color: red;">' +"在第" + (process.length - 1) + "步發生溢位" + '</p>';
+            }else{
             window.alert("運算完成！\n總運算次數" + (process.length - 1));
+            var el2 = document.getElementById("status");
+            el2.innerHTML = "";
+            }
             //跳出通知視窗
         }
         //當收到按鈕被按下之訊息後，執行主運算
