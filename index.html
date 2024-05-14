@@ -113,17 +113,24 @@
         el.onclick = function proc(){
 
             var inputElement = document.getElementById('input_num');
-            var input = inputElement.value;
+            var input = inputElement.valueAsNumber;
             //讀取ID為"input_num"的數字輸入格所傳回之訊息
 
             var status = 0;
             
             if (input > 0 && input % 1 == 0){
-                var process = [input];
-                //如果input符合正整數，新增process陣列，並將輸入的數字先加入
+                if(input <= Number.MAX_SAFE_INTEGER){
+                    var process = [input];
+                }else{
+                    window.alert("輸入數值溢位！");
+                    input = "";
+                    document.getElementById('input_num').value = "";
+                }                                
+                //如果input符合正整數且未溢位，新增process陣列，並將輸入的數字先加入
             }else{
                 window.alert("輸入數值錯誤！\n請輸入正整數");
                 input = "";
+                document.getElementById('input_num').value = "";
                 //如果input不符合正整數，跳出警告視窗並清空input之值
             }
            
