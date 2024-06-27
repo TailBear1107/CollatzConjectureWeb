@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"><!--增加一個行動裝置的版面宣告-->
-    <title>考拉茲猜想</title>
+    <title>都卜勒頻移計算機</title>
     <style>
         body{
             background: white;
@@ -13,17 +13,16 @@
         }
         @media(prefers-color-scheme: light){
             body{
-            background: white;
-            color: black;
+                background: white;
+                color: black;
             }
         }
         @media(prefers-color-scheme: dark){
             body{
-            background: rgb(35,35,35);
-            color: white;
+                background: rgb(35,35,35);
+                color: white;
             }
         }
-        /*深色模式自動切換*/
         input.button {
             width:120px;
             height:40px;
@@ -38,7 +37,7 @@
             background-color:rgb(3, 94, 252);
         }
 
-        input.input_num {
+        input.input_f0 {
             display: inline-block;
             width:300px;
             height:36px;
@@ -47,7 +46,7 @@
         }
 
         h1.title {
-            color:white;
+            color: black;
             font-size: 30px;
             font-weight: bold;
         }
@@ -59,14 +58,14 @@
 
         nav > ul {
             list-style: none; /* 移除項目符號 */
-            background-color: black;
+            background-color: bisque;
             display: block; 
             margin: 0;
             padding: 0;
         }
 
         nav li:hover {
-        background-color: rgb(115, 115, 115);
+        background-color: rgb(195, 195, 195);
         color: white;
         }
 
@@ -81,98 +80,107 @@
 <body>
     <nav>
         <ul class="topbar">
-            <li><h1 class="title">考拉茲猜想</h1></li>
+            <li><h1 class="title">都卜勒頻移計算機</h1></li>
         </ul>    
     </nav>
 
     <br>
-    <center><input type="number" name="input_num " class="input_num"id="input_num" step="1" min="1" placeholder="請輸入正整數" required autofocus>
+    <center>
+        <p style="font-size: large;">發聲體發射之原始頻率(Hz)
+        <input type="number" name="input_f0 " class="input_f0"id="input_f0" step="0.1" placeholder="請輸入發聲體所發射之原始頻率" required autofocus></p>
+        <br>
+        <p style="font-size: large;">攝氏氣溫(°C)
+        <input type="number" name="input_temp " class="input_f0"id="input_temp" step="0.1" placeholder="請輸入攝氏氣溫(不包含°C)" required></p>
+        <p style="font-size: small;">輸入此值以計算音速</p>
+        <br>
+        <p style="font-size: large;">接收者之移動速度(m/s)
+        <input type="number" name="input_vr " class="input_f0"id="input_vr" step="0.1" placeholder="請輸入接收者的移動速度(m/s)" required></p>
+        <p style="font-size: medium;">接收者向發聲體接近，請輸入正值；接收者對發聲體遠離，請輸入負值。</p>
+        <br>
+        <p style="font-size: large;">發聲體之移動速度(m/s)
+        <input type="number" name="input_vs " class="input_f0"id="input_vs" step="0.1" placeholder="請輸入發聲體的移動速度(m/s)" required></p>
+        <p style="font-size: medium;">發聲體對接收者遠離，請輸入正值；發聲體向接收者接近，請輸入負值。</p>
+        <br>
     <input type="button" value="開始運算" class="button" id="button" ></center>
 
     <div id="out">
     <section>
-        <center><h1 style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</h1></center>
-        <div id="status"></div>
-        <div id="output"><p style="font-style: italic;">請輸入正整數並開始運算以取得結果</p></div>
-        
+        <center><h1 style="color: aquamarine; font-size: 20px; font-weight: bold;">計算結果</h1></center>
+        <div id="output"><center><p style="font-style: italic;">請輸入各項數值並開始運算以取得結果</p></center></div>
 
 
     </section>
     </div>
 
     <script>
-        document.getElementById("input_num").addEventListener("keyup",function(event){
+        function BlankDetect(){
+            if(document.getElementById('input_f0').value != "" && 
+            document.getElementById('input_temp').value != "" && 
+            document.getElementById('input_vr').value != "" && 
+            document.getElementById('input_vs').value != ""){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        function BlankFillZero(item){
+            if(document.getElementById(item).value == ""){
+                document.getElementById(item).value = "0";
+            }
+        }
+
+        document.addEventListener("keyup",function(event){
             event.preventDefault();
-            if (event.keyCode === 13) {
-            document.getElementById("button").click();
+            if (event.keyCode === 13){
+                if(BlankDetect() != true){
+                    if(confirm("有輸入欄位為空，是否以0填入該值進行運算？") == true){
+                        BlankFillZero('input_f0');
+                        BlankFillZero('input_temp');
+                        BlankFillZero('input_vr');
+                        BlankFillZero('input_vs');
+                        document.getElementById("button").click();
+                    }else{
+                        window.alert("請完整補齊數值！");
+                    }
+                }else{
+                    document.getElementById("button").click();
+                }
             }
         })
-        //增加一個EventListener，偵測Enter鍵是否被按下，若被按下則代為執行點擊按鈕
+        //偵測Enter鍵是否被按下，若被按下則代為執行點擊按鈕
 
         var el = document.querySelector(".button");
         el.onclick = function proc(){
 
-            var inputElement = document.getElementById('input_num');
-            var input = inputElement.valueAsNumber;
-            //讀取ID為"input_num"的數字輸入格所傳回之訊息
+            var inputElement = document.getElementById('input_f0');
+            var f0 = inputElement.valueAsNumber;
 
-            var status = 0;
+            var inputElement = document.getElementById('input_temp');
+            var temp = inputElement.valueAsNumber;
+
+            var inputElement = document.getElementById('input_vr');
+            var vr = inputElement.valueAsNumber;
+
+            var inputElement = document.getElementById('input_vs');
+            var vs = inputElement.valueAsNumber;
+            //讀取數字輸入格所傳回之訊息
+
+            var v = 331 + 0.6 * temp;
+            //計算音速
             
-            if (input > 0 && input % 1 == 0){
-                if(input <= Number.MAX_SAFE_INTEGER){
-                    var process = [input];
-                }else{
-                    window.alert("輸入數值溢位！");
-                    input = "";
-                    document.getElementById('input_num').value = "";
-                }                                
-                //如果input符合正整數且未溢位，新增process陣列，並將輸入的數字先加入
-            }else{
-                window.alert("輸入數值錯誤！\n請輸入正整數");
-                input = "";
-                document.getElementById('input_num').value = "";
-                //如果input不符合正整數，跳出警告視窗並清空input之值
-            }
-           
-            while(input != 1){
-                if(input % 2 != 0){
-                    input = input * 3 + 1;
+            let numerator = v + vr;
+            let denominator = v + vs;
 
-                    if(input >= Number.MAX_SAFE_INTEGER){
-                        process.push("(發生溢位)")
-                        status = 1;
-                        break;
-                    }
-                    //溢位檢測
-                }else{
-                    input /= 2;
-                } 
-                process.push(input);  
-            }
+            var f = f0 * (numerator/denominator);
+            //計算頻率
 
-            console.log(process);
+            console.log(f0,temp,vr,vs,v,numerator,denominator,f);
             //Debug用，可移除
 
-            var stringprocess = process.toString();
-            //process陣列轉字串
-
-            var outputprocess = stringprocess.replace(/,/g , "<br>")
-            //將陣列內逗號取代為換行
-
             var el1 = document.getElementById("output");
-            el1.innerHTML = '<p style = "border:1px solid #000000;width: 200px;height: 400px;padding:5px;overflow: auto;">' + outputprocess + '</p>';
-            //顯示陣列內容
-
-            if(status == 1){
-                window.alert("運算已終止！\n在第" + (process.length - 1) + "步運算時變數發生溢位");
-                var el2 = document.getElementById("status");
-                el2.innerHTML = '<p style = "font-weight: bold; color: red;">' +"在第" + (process.length - 1) + "步發生溢位" + '</p>';
-            }else{
-            window.alert("運算完成！\n總運算次數" + (process.length - 1));
-            var el2 = document.getElementById("status");
-            el2.innerHTML = "";
-            }
-            //跳出通知視窗
+            el1.innerHTML = '<p style="font-size: large;"><center>' + '音速為' + v + 'm/s，觀察者接收到' + f + 'Hz之聲波' +'</center></p>';
+            //顯示計算結果
         }
         //當收到按鈕被按下之訊息後，執行主運算
     </script>
