@@ -11,7 +11,7 @@ Input the number you want to process, and you can get the result.
 請見[Releases](https://github.com/TailBear1107/CollatzConjectureWeb/releases)
 
 ## 錯誤
-請見[issues](https://github.com/TailBear1107/CollatzConjectureWeb/issues)
+請見[Issues](https://github.com/TailBear1107/CollatzConjectureWeb/issues)
 
 ## 注意
 - 受限於JavaScript的變數限制，運算過程中若是數字超出可運算範圍將自動中止運算。
