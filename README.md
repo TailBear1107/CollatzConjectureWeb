@@ -1,7 +1,7 @@
 # 考拉茲猜想網頁版 Collatz Conjecture Web
 ### 網頁直接用
-- V1：<https://tailbear1107.github.io/CollatzConjectureWeb/v1.html>
-- V2：<https://tailbear1107.github.io/CollatzConjectureWeb/v2.html>
+- 傳統文字(V1.4)：<https://tailbear1107.github.io/CollatzConjectureWeb/lagacy>
+- 具有圖表(V2.1)：<https://tailbear1107.github.io/CollatzConjectureWeb/graphics>
 
 ## 使用方法
 在網頁輸入數字並開始運算，即可取得結果。
@@ -19,7 +19,3 @@ Input the number you want to process, and you can get the result.
 
 - Because of the limit of JavaScript, if the number is too big to process, it will stop processing automatically.
 - Version2 needs to import a file on external CDN to create the chart, so if the Internet connection is offline, some functions will unable to use.
-
-## 目前網頁版版本
-- [V1](https://tailbear1107.github.io/CollatzConjectureWeb/v1.html)：V1.4
-- [V2](https://tailbear1107.github.io/CollatzConjectureWeb/v2.html)：V2.0
