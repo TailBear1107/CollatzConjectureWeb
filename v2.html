@@ -1,11 +1,12 @@
-<!DOCTYPE html> <!--註解此為HTML形式網頁-->
+<!DOCTYPE html><!-- 註解此為HTML形式網頁 -->
 <html>
 <html lang="zh-tw">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"><!--增加一個行動裝置的版面宣告-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script><!--引入chart.js檔案-->
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- 增加一個行動裝置的版面宣告 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script><!-- 引入chart.js檔案 -->
+    <!-- むしろ０から また宇宙をはじめてみようか -->
 
     <title>考拉茲猜想</title>
     <style>
@@ -25,7 +26,7 @@
             color: white;
             }
         }
-        /*深色模式自動切換*/
+        /* 深色模式自動切換 */
         input.button {
             width:120px;
             height:40px;
@@ -38,6 +39,7 @@
         }
         input.button:hover {
             background-color:rgb(3, 94, 252);
+            cursor: pointer;/* 移到按鈕上換成點擊的游標圖示 */
         }
 
         input.input_num {
@@ -48,33 +50,43 @@
             font-size:20px;
         }
 
-        h1.title {
+        a.title {
             color:white;
             font-size: 30px;
             font-weight: bold;
         }
 
-        nav.a {
-            color: inherit; /* 移除超連結顏色 */
+        nav a {
+            color: white; /* 超連結顏色改白色 */
             text-decoration: none; /* 移除超連結底線 */
+            display: block; /* 讓 <a> 填滿 <li> */
+            padding: 10px;
         }
 
         nav > ul {
+            color: white;
             list-style: none; /* 移除項目符號 */
             background-color: black;
-            display: block; 
+            display: inline-block; 
+            border-radius: 10px;
             margin: 0;
             padding: 0;
         }
 
+        .topbar > li {
+            display: inline-block;
+        }
+
         nav li:hover {
-        background-color: rgb(115, 115, 115);
-        color: white;
+            background-color: rgb(115, 115, 115);
+            color: white;
+            border-radius: 10px;
         }
 
         .topbar{
             display: flex;
-            justify-content: space-between;
+            text-align: center;
+            align-items: center;
         }
 
     </style>    
@@ -83,11 +95,13 @@
 <body>
     <nav>
         <ul class="topbar">
-            <li><h1 class="title">考拉茲猜想</h1></li>
+            <li><a class="title" href="javascript:window.location.reload()" title="重新載入此頁">考拉茲猜想</a></li>
+            <li><a href="https://github.com/TailBear1107/CollatzConjectureWeb/releases/tag/2.1" title="GitHub">Version 2.1</a></li>
         </ul>    
     </nav>
 
     <br>
+
     <center><input type="number" name="input_num " class="input_num"id="input_num" step="1" min="1" placeholder="請輸入正整數" required autofocus>
     <input type="button" value="開始運算" class="button" id="button" ></center>
 
@@ -95,7 +109,7 @@
     <section>
         <center><h1 style="color: aquamarine; font-size: 20px; font-weight: bold;">執行結果</h1>
         <div id="status"></div></center>
-        <div style="justify-content: center;display: flex;">
+        <div style="justify-content: center;display: flex; flex-wrap: wrap;">
             <div id="output"><p style="font-style: italic;">請輸入正整數並開始運算以取得結果</p></div>
             <div id="chart" style="width:700px; height:400px;float: left;"><canvas id="processchart"></div>
         </div>
@@ -179,6 +193,17 @@
                 length_num.push(i+1);
             }
 
+            if(status == 1){
+                window.alert("運算已終止！\n在第" + (process.length - 1) + "步運算時變數發生溢位");
+                var el2 = document.getElementById("status");
+                el2.innerHTML = '<p style = "font-weight: bold; color: red;">' +"在第" + (process.length - 1) + "步發生溢位" + '</p>';
+            }else{
+            window.alert("運算完成！\n總運算次數" + (process.length - 1));
+            var el2 = document.getElementById("status");
+            el2.innerHTML = "";
+            }
+            //跳出通知視窗
+
             clearCanva();
             var ctx = document.getElementById("processchart").getContext("2d");
             //初始化圖表
@@ -209,17 +234,6 @@
                 },
             });
             //繪製圖表
-
-            if(status == 1){
-                window.alert("運算已終止！\n在第" + (process.length - 1) + "步運算時變數發生溢位");
-                var el2 = document.getElementById("status");
-                el2.innerHTML = '<p style = "font-weight: bold; color: red;">' +"在第" + (process.length - 1) + "步發生溢位" + '</p>';
-            }else{
-            window.alert("運算完成！\n總運算次數" + (process.length - 1));
-            var el2 = document.getElementById("status");
-            el2.innerHTML = "";
-            }
-            //跳出通知視窗
         }
         //當收到按鈕被按下之訊息後，執行主運算
     </script>
